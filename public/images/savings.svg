@@ -1,0 +1,20 @@
+<svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="350" fill="#f7fcff"/>
+  <!-- bar chart representing decreasing bills -->
+  <g>
+    <rect x="60"  y="120" width="60" height="180" fill="#e2694b" rx="4"/>
+    <rect x="150" y="160" width="60" height="140" fill="#f0a35f" rx="4"/>
+    <rect x="240" y="200" width="60" height="100" fill="#ffce54" rx="4"/>
+    <rect x="330" y="230" width="60" height="70"  fill="#7fc98f" rx="4"/>
+    <rect x="420" y="250" width="30" height="50"  fill="#229954" rx="4"/>
+  </g>
+  <line x1="40" y1="300" x2="470" y2="300" stroke="#94a3b8" stroke-width="2"/>
+  <!-- downward arrow -->
+  <path d="M120,90 L380,60" stroke="#229954" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#229954"/>
+    </marker>
+  </defs>
+  <text x="120" y="45" font-family="Arial, sans-serif" font-size="22" fill="#1e293b" font-weight="bold">Economies</text>
+</svg>
