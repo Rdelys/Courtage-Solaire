@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Courtage Solaire — Votre partenaire énergétique')</title>
     <meta name="description" content="Courtier en solutions solaires : accompagnement personnalisé, expertise indépendante et solutions durables pour particuliers et professionnels.">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -189,6 +189,99 @@
 <footer class="site-footer">
     @yield('footer')
 </footer>
+<div id="cs-chatbot">
+    <button id="cs-chatbot-toggle" aria-label="Ouvrir le chat">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.8-.9L3 21l1.9-4.8A8.4 8.4 0 0 1 20 6.6 8.3 8.3 0 0 1 21 11.5Z"/></svg>
+    </button>
 
+    <div id="cs-chatbot-panel">
+        <div id="cs-chatbot-header">
+            <span>Assistant Courtage Solaire</span>
+            <button id="cs-chatbot-close" aria-label="Fermer">&times;</button>
+        </div>
+        <div id="cs-chatbot-messages"></div>
+        <form id="cs-chatbot-form">
+            <input type="text" id="cs-chatbot-input" placeholder="Écrivez votre message..." autocomplete="off" required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    #cs-chatbot{position:fixed;bottom:24px;right:24px;z-index:999;font-family:'Montserrat',sans-serif;}
+    #cs-chatbot-toggle{width:58px;height:58px;border-radius:50%;background:var(--gold, #D9A94E);border:none;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;}
+    #cs-chatbot-panel{position:fixed;bottom:96px;right:24px;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 140px);background:#141414;border:1px solid #262626;border-radius:14px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+    #cs-chatbot-panel.open{display:flex;}
+    #cs-chatbot-header{background:#0a0a0a;color:#fff;padding:14px 16px;font-weight:700;font-size:13px;letter-spacing:.5px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #262626;}
+    #cs-chatbot-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;}
+    #cs-chatbot-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+    .cs-msg{font-size:13.5px;line-height:1.5;padding:10px 14px;border-radius:12px;max-width:85%;white-space:pre-wrap;}
+    .cs-msg.user{align-self:flex-end;background:#D9A94E;color:#111;border-bottom-right-radius:2px;}
+    .cs-msg.bot{align-self:flex-start;background:#1f1f1f;color:#eee;border-bottom-left-radius:2px;}
+    #cs-chatbot-form{display:flex;border-top:1px solid #262626;}
+    #cs-chatbot-input{flex:1;border:none;background:#1c1c1c;color:#fff;padding:12px 14px;font-size:13.5px;font-family:inherit;outline:none;}
+    #cs-chatbot-form button{background:var(--gold, #D9A94E);color:#111;border:none;padding:0 18px;font-weight:700;font-size:12px;cursor:pointer;}
+</style>
+
+<script>
+(function () {
+    const toggle   = document.getElementById('cs-chatbot-toggle');
+    const panel    = document.getElementById('cs-chatbot-panel');
+    const closeBtn = document.getElementById('cs-chatbot-close');
+    const form     = document.getElementById('cs-chatbot-form');
+    const input    = document.getElementById('cs-chatbot-input');
+    const messages = document.getElementById('cs-chatbot-messages');
+    const csrf     = document.querySelector('meta[name="csrf-token"]').content;
+
+    let opened = false;
+
+    function addMessage(text, who) {
+        const div = document.createElement('div');
+        div.className = 'cs-msg ' + who;
+        div.textContent = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    toggle.addEventListener('click', () => {
+        panel.classList.toggle('open');
+        if (!opened) {
+            opened = true;
+            addMessage("Bonjour 👋 Je suis l'assistant de Courtage Solaire. Comment puis-je vous aider ?", 'bot');
+        }
+    });
+
+    closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        input.value = '';
+        input.disabled = true;
+
+        try {
+            const res = await fetch('{{ route('chatbot.send') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ message: text }),
+            });
+            const data = await res.json();
+            addMessage(data.reply, 'bot');
+        } catch (err) {
+            addMessage("Désolé, une erreur réseau est survenue.", 'bot');
+        } finally {
+            input.disabled = false;
+            input.focus();
+        }
+    });
+})();
+</script>
 </body>
 </html>
