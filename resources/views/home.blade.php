@@ -205,8 +205,8 @@
 
 @section('footer')
     @php
-        $contact1 = ['label' => 'Standard', 'phone' => '01 23 45 67 89'];
-        $contact2 = ['label' => 'Conseiller commercial', 'phone' => '06 12 34 56 78'];
+        $contact1 = ['label' => 'Standard', 'phone' => '06 13 65 29 64'];
+        $contact2 = ['label' => 'Conseiller commercial', 'phone' => '06 13 65 29 64'];
     @endphp
     <div class="foot-top">
         <div class="container footer-grid" style="padding:64px 24px 48px;">
@@ -270,7 +270,8 @@
                     </div>
                     <div style="display:flex;gap:10px;align-items:flex-start;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                        <div>123 Rue de l'Énergie, 75000 Paris</div>
+                        <div>59 rue de Ponthieu, Bureau 326 · 75008 Paris</div><br>
+                        <div>SIREN 103 572 947 · SAS au capital de 10 000€</div>
                     </div>
                 </div>
 
