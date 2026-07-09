@@ -9,10 +9,51 @@
     .hero-image{flex:1 1 520px;position:relative;min-height:420px;overflow:hidden;}
     .hero-image img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
     .hero-fade{position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,0) 22%);}
+
+    .grid-3-services{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .service-card{background:#fff;border:1px solid #e6e0d3;border-radius:10px;padding:34px 26px;transition:transform .2s ease,box-shadow .2s ease;}
+    .service-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.08);}
+
+    img{max-width:100%;}
+    .container{width:100%;box-sizing:border-box;}
+    * {box-sizing:border-box;}
+
+    /* ===== RESPONSIVE : TABLETTE ===== */
     @media (max-width:900px){
         .hero-text{padding:44px 24px 30px;}
         .hero-image{min-height:300px;}
         .hero-fade{background:linear-gradient(180deg,#0a0a0a 0%,rgba(10,10,10,0) 22%);}
+
+        .grid-4{grid-template-columns:repeat(2,1fr)!important;gap:28px!important;}
+        .grid-3-services{grid-template-columns:repeat(2,1fr)!important;}
+        .grid-2-60{grid-template-columns:1fr!important;gap:28px!important;}
+        .grid-2-form{grid-template-columns:1fr!important;}
+        .footer-grid{grid-template-columns:repeat(2,1fr)!important;gap:32px!important;}
+        .about-img{height:300px!important;}
+        h1{font-size:38px!important;}
+        h2{font-size:28px!important;}
+    }
+
+    /* ===== RESPONSIVE : MOBILE ===== */
+    @media (max-width:600px){
+        .grid-4{grid-template-columns:1fr!important;}
+        .grid-3-services{grid-template-columns:1fr!important;}
+        .footer-grid{grid-template-columns:1fr!important;text-align:left;}
+        .hero-text{padding:36px 20px 26px;}
+        .hero-image{min-height:220px;}
+        h1{font-size:30px!important;line-height:1.2!important;}
+        h2{font-size:22px!important;}
+        section{padding:44px 0!important;}
+        .quote-form{padding:22px 16px!important;}
+        .about-img{height:220px!important;}
+        .service-card, .container.grid-4 > div{padding:26px 20px!important;}
+        .hero-text > div > div[style*="display:flex"]{flex-direction:column;}
+        .hero-text a.btn{width:100%;text-align:center;}
+    }
+
+    @media (max-width:400px){
+        h1{font-size:26px!important;}
+        .hero-text{padding:28px 16px 22px;}
     }
 </style>
 @endpush
@@ -27,7 +68,7 @@
                     Courtier en solutions solaires, nous vous accompagnons vers une énergie plus propre, plus économique et durable.
                 </p>
                 <div style="display:flex;gap:16px;flex-wrap:wrap;">
-                    <a href="#solutions" class="btn btn-gold">NOS SOLUTIONS</a>
+                    <a href="#services" class="btn btn-gold">NOS SERVICES</a>
                     <a href="#devis" class="btn btn-outline">DEMANDER UN DEVIS</a>
                 </div>
             </div>
@@ -80,6 +121,49 @@
             </p>
             <a href="#devis" class="btn btn-gold">EN SAVOIR PLUS</a>
         </div>
+    </div>
+</section>
+
+{{-- SERVICES --}}
+<section id="services" style="background:var(--cream);color:#111;">
+    <div class="container" style="text-align:center;">
+        <div class="eyebrow" style="justify-content:center;">NOS SERVICES</div>
+        <h2 style="max-width:760px;margin:0 auto 50px;color:#111;">NOS PRESTATIONS</h2>
+    </div>
+    <div class="container grid-3-services">
+        @php
+            $services = [
+                [
+                    'icon' => 'bolt',
+                    'title' => 'COURTAGE ÉNERGIE RÉSEAU',
+                    'desc' => "Nous négocions pour vous les meilleurs contrats d'électricité et de gaz auprès des fournisseurs, adaptés à votre profil de consommation.",
+                ],
+                [
+                    'icon' => 'sun',
+                    'title' => 'AUTONOMIE ÉNERGÉTIQUE PAR CENTRALE PHOTOVOLTAÏQUE AVEC ABONNEMENT',
+                    'desc' => "Devenez autonome en énergie grâce à une centrale photovoltaïque installée sans investissement initial, via une formule d'abonnement mensuel.",
+                ],
+                [
+                    'icon' => 'refund',
+                    'title' => 'RÉCUPÉRATION DES TROP-PERÇUS ÉNERGÉTIQUES',
+                    'desc' => "Nous analysons vos factures passées et engageons les démarches nécessaires pour récupérer les sommes trop perçues par vos fournisseurs d'énergie.",
+                ],
+            ];
+            $sericons = [
+                'bolt'   => '<path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/>',
+                'sun'    => '<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+                'refund' => '<circle cx="12" cy="12" r="8.5"/><path d="M9.5 12h6M9.5 12l2.7-2.7M9.5 12l2.7 2.7"/>',
+            ];
+        @endphp
+        @foreach($services as $s)
+        <div class="service-card">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px;">
+                {!! $sericons[$s['icon']] !!}
+            </svg>
+            <div style="font-weight:700;font-size:14px;letter-spacing:.4px;margin-bottom:14px;line-height:1.4;">{{ $s['title'] }}</div>
+            <div style="color:#666;font-size:13.5px;line-height:1.5;">{{ $s['desc'] }}</div>
+        </div>
+        @endforeach
     </div>
 </section>
 
@@ -156,7 +240,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('quote.store') }}" class="quote-form" style="background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.06);">
+        <form method="POST" action="{{ route('quote.store') }}" class="quote-form" style="background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:36px;">
             @csrf
             <div class="grid-2-form">
                 <div>
@@ -231,6 +315,7 @@
                 <div style="display:flex;flex-direction:column;gap:12px;font-size:13.5px;color:var(--grey-text);">
                     <a href="#accueil" style="transition:color .2s;" onmouseover="this.style.color='#D9A94E'" onmouseout="this.style.color='#B9B9B9'">Accueil</a>
                     <a href="#apropos" onmouseover="this.style.color='#D9A94E'" onmouseout="this.style.color='#B9B9B9'">À propos</a>
+                    <a href="#services" onmouseover="this.style.color='#D9A94E'" onmouseout="this.style.color='#B9B9B9'">Nos services</a>
                     <a href="#solutions" onmouseover="this.style.color='#D9A94E'" onmouseout="this.style.color='#B9B9B9'">Nos solutions</a>
                     <a href="#engagements" onmouseover="this.style.color='#D9A94E'" onmouseout="this.style.color='#B9B9B9'">Nos engagements</a>
                     <a href="#devis" onmouseover="this.style.color='#D9A94E'" onmouseout="this.style.color='#B9B9B9'">Demander un devis</a>
@@ -238,12 +323,11 @@
             </div>
 
             <div>
-                <div style="font-weight:700;font-size:13px;letter-spacing:1px;margin-bottom:20px;">NOS SOLUTIONS</div>
+                <div style="font-weight:700;font-size:13px;letter-spacing:1px;margin-bottom:20px;">NOS SERVICES</div>
                 <div style="display:flex;flex-direction:column;gap:12px;font-size:13.5px;color:var(--grey-text);">
-                    <a href="#solutions">Résidentiel</a>
-                    <a href="#solutions">Professionnel</a>
-                    <a href="#solutions">Sites isolés</a>
-                    <a href="#solutions">Stockage</a>
+                    <a href="#services">Courtage énergie réseau</a>
+                    <a href="#services">Autonomie photovoltaïque par abonnement</a>
+                    <a href="#services">Récupération des trop-perçus</a>
                 </div>
             </div>
 
@@ -265,18 +349,24 @@
                         </div>
                     </div>
                     <div style="display:flex;gap:10px;align-items:flex-start;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><path d="M4 4h16v16H4z" opacity="0"/><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
                         <div>contact@courtage-solaire.fr</div>
                     </div>
                     <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.7 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.7-3.5-9s1-6.5 3.5-9Z"/></svg>
+                        <div><a href="https://fdk-fastdatakeys.com/" target="_blank" rel="noopener" style="color:var(--grey-text);">fdk-fastdatakeys.com</a></div>
+                    </div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
-                        <div>59 rue de Ponthieu, Bureau 326 · 75008 Paris</div><br>
-                        <div>SIREN 103 572 947 · SAS au capital de 10 000€</div>
+                        <div>
+                            59 rue de Ponthieu, Bureau 326 · 75008 Paris<br>
+                            SIREN 103 572 947 · SAS au capital de 10 000€
+                        </div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:12px;margin-top:22px;">
-                    @foreach(['f' => 'M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.3.2-.5.5-.5H17', 'in' => 'M4 4h3v16H4zM10 9h3v11h-3zM10 13c0-2 1.5-3 3-3s3 1 3 3v7h-3v-6c0-.6-.4-1-1-1s-1 .4-1 1v6h-1v-7Z', 'ig' => 'M4 4h16v16H4z'] as $key => $path)
+                    @foreach(['f', 'in', 'ig'] as $key)
                     <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid #333;display:flex;align-items:center;justify-content:center;transition:all .2s;" onmouseover="this.style.background='#D9A94E';this.style.borderColor='#D9A94E'" onmouseout="this.style.background='transparent';this.style.borderColor='#333'">
                         @if($key === 'f')
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.7c0-.9.3-1.5 1.6-1.5h1.7V3.3C15.9 3.2 15 3.1 13.9 3.1c-2.4 0-4 1.4-4 4v2.7H7v3.2h2.9V21h3.6Z"/></svg>
