@@ -352,10 +352,10 @@
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
                         <div>contact@courtage-solaire.fr</div>
                     </div>
-                    <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <!-- <div style="display:flex;gap:10px;align-items:flex-start;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.7 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.7-3.5-9s1-6.5 3.5-9Z"/></svg>
                         <div><a href="https://fdk-fastdatakeys.com/" target="_blank" rel="noopener" style="color:var(--grey-text);">fdk-fastdatakeys.com</a></div>
-                    </div>
+                    </div> -->
                     <div style="display:flex;gap:10px;align-items:flex-start;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A94E" stroke-width="1.8" style="margin-top:2px;flex-shrink:0;"><path d="M12 21s-7-6.5-7-11.5A7 7 0 0 1 19 9.5C19 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
                         <div>
